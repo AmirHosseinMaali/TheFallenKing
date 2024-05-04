@@ -12,7 +12,7 @@ public class ParallaxBackground : MonoBehaviour
         //Getting the starting X position of sprite.
         _startingPos = transform.position.x;
         //Getting the length of the sprites.
-        _lengthOfSprite = GetComponent<SpriteRenderer>().bounds.size.x;
+        _lengthOfSprite = GetComponentInChildren<SpriteRenderer>().bounds.size.x;
     }
 
 
