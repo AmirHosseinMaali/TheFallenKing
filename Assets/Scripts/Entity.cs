@@ -3,6 +3,9 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     [Header("Collision info")]
+
+    public Transform attackCheck;
+    public float attackCheckRadius;
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected Transform wallCheck;
@@ -13,6 +16,7 @@ public class Entity : MonoBehaviour
     #region Components
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public EntityFX fX { get; private set; }
     #endregion
 
     public int facingDir { get; private set; } = 1;
@@ -24,12 +28,19 @@ public class Entity : MonoBehaviour
     }
     protected virtual void Start()
     {
+        fX=GetComponent<EntityFX>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
     protected virtual void Update()
     {
 
+    }
+
+    public virtual void Damage()
+    {
+        fX.StartCoroutine("FlashFX");
+        Debug.Log(gameObject.name + " is damaged!");
     }
 
     #region Collision
@@ -41,14 +52,16 @@ public class Entity : MonoBehaviour
     {
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
+        Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
     }
     #endregion
     #region Velocity
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {
         rb.velocity = new Vector2(_xVelocity, _yVelocity);
+        FlipController(_xVelocity);
     }
-    public void ZeroVelocity() => rb.velocity = Vector2.zero;
+    public void SetZeroVelocity() => rb.velocity = new Vector2(0, rb.velocity.y);
     #endregion
     #region Flip
     public void Flip()
