@@ -30,7 +30,7 @@ public class PlayerWallSlideState : PlayerState
         }
         else if (player.facingDir == xInput && player.IsWallDetected())
         {
-            rb.velocity = new Vector2(0, rb.velocity.y * .6f);
+            rb.velocity = new Vector2(0, rb.velocity.y * .3f);
         }
         if (player.IsGroundDetected() || !player.IsWallDetected())
         {

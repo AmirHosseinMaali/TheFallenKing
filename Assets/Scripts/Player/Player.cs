@@ -35,7 +35,7 @@ public class Player : Entity
 
     public PlayerDashState dashState { get; private set; }
 
-    public PlayerPrimaryAttack primaryAttack { get; private set; }
+    public PlayerPrimaryAttackState primaryAttack { get; private set; }
 
     #endregion
 
@@ -53,7 +53,7 @@ public class Player : Entity
         wallSlideState = new PlayerWallSlideState(stateMachine, this, "WallSlide");
         wallJumpState = new PlayerWallJumpState(stateMachine, this, "Jump");
 
-        primaryAttack = new PlayerPrimaryAttack(stateMachine, this, "Attack");
+        primaryAttack = new PlayerPrimaryAttackState(stateMachine, this, "Attack");
     }
 
     protected override void Start()

@@ -1,9 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [Header("Collision info")]
+    [Header("KnockBack info")]
+    [SerializeField] protected Vector2 knockbackDir;
+    [SerializeField] protected float knockbackDuration = .07f;
+    protected bool isKnocked;
 
+    [Header("Collision info")]
     public Transform attackCheck;
     public float attackCheckRadius;
     [SerializeField] protected Transform groundCheck;
@@ -28,7 +33,7 @@ public class Entity : MonoBehaviour
     }
     protected virtual void Start()
     {
-        fX=GetComponent<EntityFX>();
+        fX = GetComponent<EntityFX>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -40,7 +45,20 @@ public class Entity : MonoBehaviour
     public virtual void Damage()
     {
         fX.StartCoroutine("FlashFX");
+
+        StartCoroutine(HitKnockback());
         Debug.Log(gameObject.name + " is damaged!");
+    }
+
+    protected virtual IEnumerator HitKnockback()
+    {
+        isKnocked = true;
+
+        rb.velocity = new Vector2(knockbackDir.x * -facingDir, knockbackDir.y);
+        yield return new WaitForSeconds(knockbackDuration);
+
+        isKnocked = false;
+
     }
 
     #region Collision
@@ -55,14 +73,21 @@ public class Entity : MonoBehaviour
         Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
     }
     #endregion
+
     #region Velocity
     public void SetVelocity(float _xVelocity, float _yVelocity)
     {
+        if (isKnocked) { return; }
         rb.velocity = new Vector2(_xVelocity, _yVelocity);
         FlipController(_xVelocity);
     }
-    public void SetZeroVelocity() => rb.velocity = new Vector2(0, rb.velocity.y);
+    public void SetZeroVelocity()
+    {
+        if (isKnocked) { return; }
+        rb.velocity = new Vector2(0, rb.velocity.y);
+    }
     #endregion
+
     #region Flip
     public void Flip()
     {
