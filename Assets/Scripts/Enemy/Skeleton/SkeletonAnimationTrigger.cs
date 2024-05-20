@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SkeletonAnimationTrigger : MonoBehaviour
 {
-    private Skeleton enemy=>GetComponentInParent<Skeleton>();
+    private Skeleton enemy => GetComponentInParent<Skeleton>();
 
     private void AnimationTrigger()
     {
@@ -21,4 +19,7 @@ public class SkeletonAnimationTrigger : MonoBehaviour
             }
         }
     }
+
+    private void OpenCounterWindow() => enemy.OpenCounterAttackWindow();
+    private void CloseCounterWindow() => enemy.CloseCounterAttackWindow();
 }

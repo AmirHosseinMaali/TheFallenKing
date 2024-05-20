@@ -5,19 +5,20 @@ public class Player : Entity
 {
     [Header("Attack details")]
     public Vector2[] attackMovement;
+    public float counterAttackDuration = .2f;
 
     [Header("Move info")]
     public float moveSpeed = 12f;
     public float jumpForce = 10f;
 
     [Header("Dash info")]
-    [SerializeField] private float dashCooldown;
-    private float dashUsageTime;
     public float dashSpeed = 12f;
     public float dashDuration = 12f;
     public float dashDir { get; private set; }
 
     public bool isBusy { get; private set; }
+
+    public SkillManager skill { get; private set; }
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
@@ -37,6 +38,8 @@ public class Player : Entity
 
     public PlayerPrimaryAttackState primaryAttack { get; private set; }
 
+    public PlayerCounterAttackState counterAttack { get; private set; }
+
     #endregion
 
     protected override void Awake()
@@ -54,12 +57,14 @@ public class Player : Entity
         wallJumpState = new PlayerWallJumpState(stateMachine, this, "Jump");
 
         primaryAttack = new PlayerPrimaryAttackState(stateMachine, this, "Attack");
+        counterAttack = new PlayerCounterAttackState(stateMachine, this, "CounterAttack");
     }
 
     protected override void Start()
     {
         base.Start();
 
+        skill = SkillManager.instance;
         stateMachine.Initialize(idleState);
     }
 
@@ -89,12 +94,10 @@ public class Player : Entity
             return;
         }
 
-        dashUsageTime -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTime < 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
         {
-            dashUsageTime = dashCooldown;
             dashDir = Input.GetAxisRaw("Horizontal");
+
             if (dashDir == 0)
             {
                 dashDir = facingDir;
