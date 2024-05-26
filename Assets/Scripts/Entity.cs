@@ -22,6 +22,7 @@ public class Entity : MonoBehaviour
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     public EntityFX fX { get; private set; }
+    public SpriteRenderer sr { get; private set; }
     #endregion
 
     public int facingDir { get; private set; } = 1;
@@ -33,8 +34,9 @@ public class Entity : MonoBehaviour
     }
     protected virtual void Start()
     {
-        fX = GetComponent<EntityFX>();
+        sr = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
+        fX = GetComponent<EntityFX>();
         rb = GetComponent<Rigidbody2D>();
     }
     protected virtual void Update()
@@ -102,4 +104,16 @@ public class Entity : MonoBehaviour
         else if (_x < 0 && facingRight) { Flip(); }
     }
     #endregion
+
+    public void MakeTransparent(bool _transparent)
+    {
+        if (_transparent)
+        {
+            sr.color = Color.clear;
+        }
+        else
+        {
+            sr.color = Color.white;
+        }
+    }
 }
