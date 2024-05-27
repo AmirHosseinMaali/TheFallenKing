@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBlackholeState : PlayerState
@@ -47,7 +48,9 @@ public class PlayerBlackholeState : PlayerState
                 }
             }
         }
+        if (player.skill.blackhole.SkillCompleted())
+        {
+            stateMachine.ChangeState(player.airState);
+        }
     }
-
-    // We exit state in blackhole controller when all of the attacks are over
 }

@@ -9,6 +9,7 @@ public class Sword_Skill_Controller : MonoBehaviour
     private Player player;
 
     private float returnSpeed ;
+    [SerializeField]private float destroySwordDuration ;
 
     private float freezeTimeDuration;
 
@@ -171,7 +172,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
         spinDirection = Mathf.Clamp(rb.velocity.x, -1, 1);
 
-        Invoke("DestroyMe", 7);
+        Invoke("DestroyMe", destroySwordDuration);
     }
 
     public void SetupPierce(int _pierceAmount)

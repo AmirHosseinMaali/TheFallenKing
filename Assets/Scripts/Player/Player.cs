@@ -85,6 +85,11 @@ public class Player : Entity
 
         stateMachine.currentState.Update();
         CheckForDashInput();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            skill.crystal.CanUseSkill();
+        }
     }
 
     public void AssignNewSword(GameObject _newSword)
@@ -95,11 +100,6 @@ public class Player : Entity
     {
         stateMachine.ChangeState(catchSword);
         Destroy(sword);
-    }
-
-    public void ExitBlackhole()
-    {
-        stateMachine.ChangeState(airState);
     }
 
     public IEnumerator BusyFor(float _seconds)
