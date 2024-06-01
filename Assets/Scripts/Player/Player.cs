@@ -38,6 +38,8 @@ public class Player : Entity
 
     public PlayerDashState dashState { get; private set; }
 
+    public PlayerDeadState deadState { get; private set; }
+
     public PlayerPrimaryAttackState primaryAttack { get; private set; }
     public PlayerCounterAttackState counterAttack { get; private set; }
 
@@ -59,6 +61,7 @@ public class Player : Entity
         jumpState = new PlayerJumpState(stateMachine, this, "Jump");
         airState = new PlayerAirState(stateMachine, this, "Jump");
         dashState = new PlayerDashState(stateMachine, this, "Dash");
+        deadState = new PlayerDeadState(stateMachine, this, "Die");
         wallSlideState = new PlayerWallSlideState(stateMachine, this, "WallSlide");
         wallJumpState = new PlayerWallJumpState(stateMachine, this, "Jump");
 
@@ -131,5 +134,11 @@ public class Player : Entity
 
             stateMachine.ChangeState(dashState);
         }
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        stateMachine.ChangeState(deadState);
     }
 }
