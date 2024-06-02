@@ -4,40 +4,103 @@ using UnityEngine;
 
 public class EntityFX : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer sr;
 
     [Header("Flash FX")]
     [SerializeField] private Material hitMat;
     private Material originalMat;
 
+
+    [Header("Element Colors")]
+    [SerializeField] private Color[] igniteColor;
+    [SerializeField] private Color[] chillColor;
+    [SerializeField] private Color[] shockColor;
+
+
     private void Start()
     {
-        spriteRenderer=GetComponentInChildren<SpriteRenderer>();
-        originalMat=spriteRenderer.material;
+        sr=GetComponentInChildren<SpriteRenderer>();
+        originalMat=sr.material;
     }
+
     private IEnumerator FlashFX()
     {
-        spriteRenderer.material=hitMat;
+        sr.material=hitMat;
+        Color currentColor=sr.color;
 
+        sr.color=Color.white;
         yield return new WaitForSeconds(.1f);
+        sr.color=currentColor;
 
-        spriteRenderer.material=originalMat;
+        sr.material=originalMat;
     }
     private void RedColorBlink()
     {
-        if(spriteRenderer.color!=Color.white)
+        if(sr.color!=Color.white)
         {
-            spriteRenderer.color=Color.white;
+            sr.color=Color.white;
         }
         else
         {
-            spriteRenderer.color=Color.red;
+            sr.color=Color.red;
         }
     }
 
-    private void CancelRedBlink()
+    private void CancelColorChange()
     {
         CancelInvoke();
-        spriteRenderer.color = Color.white;
+        sr.color = Color.white;
+    }
+
+    public void IgniteFXFor(float _seconds)
+    {
+        InvokeRepeating("IgniteColorFX", 0, .3f);
+        Invoke("CancelColorChange", _seconds);
+    }
+    public void ChillFXFor(float _seconds)
+    {
+        InvokeRepeating("ChillColorFX", 0, .3f);
+        Invoke("CancelColorChange", _seconds);
+    }
+    public void ShockFXFor(float _seconds)
+    {
+        InvokeRepeating("ShockColorFX", 0, .3f);
+        Invoke("CancelColorChange", _seconds);
+    }
+
+    private void IgniteColorFX()
+    {
+        if (sr.color != igniteColor[0])
+        {
+            sr.color = igniteColor[0];
+        }
+        else
+        {
+            sr.color = igniteColor[1];
+        }
+    }
+
+    private void ChillColorFX()
+    {
+        if (sr.color != chillColor[0])
+        {
+            sr.color = chillColor[0];
+        }
+        else
+        {
+            sr.color = chillColor[1];
+        }
+    }
+
+    private void ShockColorFX()
+    {
+        if (sr.color != shockColor[0])
+        {
+            sr.color = shockColor[0];
+        }
+        else
+        {
+            sr.color = shockColor[1];
+        }
     }
 }

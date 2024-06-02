@@ -2,16 +2,18 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    private EntityFX fx;
+
     [Header("Major Stats")]
-    public Stat strength;
-    public Stat agility;
-    public Stat intelligence;
-    public Stat vitality;
+    public Stat strength; // 1 point increase damage by 1 and crit.power by 1%
+    public Stat agility;  // 1 point increase evasion by 1% and crit.chance by 1%
+    public Stat intelligence; // 1 point increase magic damage by 1 and magic resistance by 3
+    public Stat vitality; // 1 point increased health by 3 or 5 points
 
     [Header("Offensive Stats")]
     public Stat damage;
     public Stat critChance;
-    public Stat critPower;
+    public Stat critPower;   // default value 150%
 
     [Header("Defensive Stats")]
     public Stat maxHealth;
@@ -20,22 +22,61 @@ public class CharacterStats : MonoBehaviour
     public Stat magicResistance;
 
     [Header("Magic Stats")]
-    public Stat fireDamage;
-    public Stat iceDamage;
-    public Stat lightningDamage;
+    public Stat fireDamage;  // do damage over time
+    public Stat iceDamage;   // reduce armor 20%
+    public Stat lightningDamage;  //reduce accuracy 20%
+
+    [Header("Effect ApplyIcons")]
+    public GameObject igniteIcon;
+    public GameObject chillIcon;
+    public GameObject shockIcon;
 
 
     public bool isIgnited;
     public bool isChilled;
     public bool isShocked;
 
+    private float elementTimer;
 
-    [SerializeField] private float currentHealth;
+    private float ignitedDamageCooldown = .3f;
+    private float ignitedDamageTimer;
+    private float igniteDamage;
+
+
+    public float currentHealth;
+
+    public System.Action onHealthChanged;
 
     protected virtual void Start()
     {
         critPower.SetDefaultValue(150);
-        currentHealth = maxHealth.GetValue();
+        currentHealth = GetMaxHealthValue();
+
+        fx = GetComponent<EntityFX>();
+    }
+
+    protected virtual void Update()
+    {
+        elementTimer -= Time.deltaTime;
+
+        ignitedDamageTimer -= Time.deltaTime;
+
+        if (elementTimer < 0)
+        {
+            //DisableIcons();
+
+            isIgnited = false;
+            isChilled = false;
+            isShocked = false;
+        }
+
+        if (ignitedDamageTimer < 0 && isIgnited)
+        {
+            DecreasedHealthBy(igniteDamage);
+
+            if (currentHealth < 0) { Die(); }
+            ignitedDamageTimer = ignitedDamageCooldown;
+        }
     }
 
     public virtual void DoDamage(CharacterStats _targetStats)
@@ -67,7 +108,7 @@ public class CharacterStats : MonoBehaviour
 
         _targetStats.TakeDamage(totalMagicalDamage);
 
-        if(Mathf.Max(_fireDamage, _iceDamage, _lightningDamage) <= 0) { return; }
+        if (Mathf.Max(_fireDamage, _iceDamage, _lightningDamage) <= 0) { return; }
 
         bool canApplyIgnite = _fireDamage > _iceDamage && _fireDamage > _lightningDamage;
         bool canApplyChill = _iceDamage > _fireDamage && _iceDamage > _lightningDamage;
@@ -92,10 +133,14 @@ public class CharacterStats : MonoBehaviour
             }
         }
 
+        if (canApplyIgnite) { _targetStats.SetupIgniteDamage(_fireDamage * .2f); }
+
 
         _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
 
     }
+
+    public void SetupIgniteDamage(float _damage) => igniteDamage = _damage;
 
     private static float CheckTargetMagicalResistance(CharacterStats _targetStats, float totalMagicalDamage)
     {
@@ -108,18 +153,52 @@ public class CharacterStats : MonoBehaviour
     {
         if (isIgnited || isChilled || isShocked) { return; }
 
-        isIgnited = _ignite;
-        isChilled = _chill;
-        isShocked = _shock;
+        if (_ignite)
+        {
+            isIgnited = _ignite;
+            elementTimer = 3;
+
+            fx.IgniteFXFor(3);
+
+            igniteIcon.SetActive(true);
+        }
+        if (_chill)
+        {
+            isChilled = _chill;
+            elementTimer = 6;
+
+            fx.ChillFXFor(6);
+
+            chillIcon.SetActive(true);
+        }
+        if (_shock)
+        {
+            isShocked = _shock;
+            elementTimer = 5;
+
+            fx.ShockFXFor(5);
+
+            shockIcon.SetActive(true);
+        }
     }
 
     public virtual void TakeDamage(float _damage)
     {
-        currentHealth -= _damage;
+        DecreasedHealthBy(_damage);
 
         if (currentHealth <= 0)
         {
             Die();
+        }
+    }
+
+    protected virtual void DecreasedHealthBy(float _damage)
+    {
+        currentHealth -= _damage;
+
+        if (onHealthChanged != null)
+        {
+            onHealthChanged();
         }
     }
 
@@ -130,7 +209,10 @@ public class CharacterStats : MonoBehaviour
 
     private float CheckTargetArmor(CharacterStats _targetStats, float totalDamage)
     {
-        totalDamage -= _targetStats.armor.GetValue();
+        if (_targetStats.isChilled) { totalDamage = _targetStats.armor.GetValue() * .8f; }
+
+        else { totalDamage -= _targetStats.armor.GetValue(); }
+
         totalDamage = Mathf.Clamp(totalDamage, 0, int.MaxValue);
         return totalDamage;
     }
@@ -138,6 +220,8 @@ public class CharacterStats : MonoBehaviour
     private bool TargetCanAvoidAttack(CharacterStats _targetStats)
     {
         float totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
+
+        if (isShocked) { totalEvasion += 20; }
 
         if (Random.Range(0, 100) < totalEvasion)
         {
@@ -160,5 +244,13 @@ public class CharacterStats : MonoBehaviour
         float critDamage = _damage * totalCritPower;
 
         return critDamage;
+    }
+    public float GetMaxHealthValue() => maxHealth.GetValue() + vitality.GetValue() * 5;
+
+    private void DisableIcons()
+    {
+        igniteIcon.SetActive(false);
+        chillIcon.SetActive(false);
+        shockIcon.SetActive(false);
     }
 }
