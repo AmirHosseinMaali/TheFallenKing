@@ -31,7 +31,7 @@ public class CharacterStats : MonoBehaviour
     public GameObject chillIcon;
     public GameObject shockIcon;
 
-
+    [Space]
     public bool isIgnited;
     public bool isChilled;
     public bool isShocked;
@@ -41,6 +41,10 @@ public class CharacterStats : MonoBehaviour
     private float ignitedDamageCooldown = .3f;
     private float ignitedDamageTimer;
     private float igniteDamage;
+
+    [Space]
+    [SerializeField] private GameObject shockStrikePrefab;
+    private float shockDamage;
 
 
     public float currentHealth;
@@ -63,12 +67,11 @@ public class CharacterStats : MonoBehaviour
 
         if (elementTimer < 0)
         {
-            //DisableIcons();
-
             isIgnited = false;
             isChilled = false;
             isShocked = false;
         }
+
 
         if (ignitedDamageTimer < 0 && isIgnited)
         {
@@ -77,6 +80,14 @@ public class CharacterStats : MonoBehaviour
             if (currentHealth < 0) { Die(); }
             ignitedDamageTimer = ignitedDamageCooldown;
         }
+    }
+
+    private void DisableIcons()
+    {
+        igniteIcon.SetActive(false);
+        chillIcon.SetActive(false);
+        shockIcon.SetActive(false);
+
     }
 
     public virtual void DoDamage(CharacterStats _targetStats)
@@ -134,6 +145,7 @@ public class CharacterStats : MonoBehaviour
         }
 
         if (canApplyIgnite) { _targetStats.SetupIgniteDamage(_fireDamage * .2f); }
+        if (canApplyShock) { _targetStats.SetupShockDamage(_lightningDamage * .2f); }
 
 
         _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
@@ -141,6 +153,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     public void SetupIgniteDamage(float _damage) => igniteDamage = _damage;
+    public void SetupShockDamage(float _damage) => shockDamage = _damage;
 
     private static float CheckTargetMagicalResistance(CharacterStats _targetStats, float totalMagicalDamage)
     {
@@ -151,9 +164,11 @@ public class CharacterStats : MonoBehaviour
 
     public void ApplyElements(bool _ignite, bool _chill, bool _shock)
     {
-        if (isIgnited || isChilled || isShocked) { return; }
+        bool canApplyIgnite = !isIgnited || !isChilled || !isShocked;
+        bool canApplyChill = !isIgnited || !isChilled || !isShocked;
+        bool canApplyShock = !isIgnited || !isChilled;
 
-        if (_ignite)
+        if (_ignite && canApplyIgnite)
         {
             isIgnited = _ignite;
             elementTimer = 3;
@@ -161,24 +176,83 @@ public class CharacterStats : MonoBehaviour
             fx.IgniteFXFor(3);
 
             igniteIcon.SetActive(true);
+            Invoke("DisableIcons", elementTimer);
         }
-        if (_chill)
+        if (_chill && canApplyChill)
         {
             isChilled = _chill;
             elementTimer = 6;
 
             fx.ChillFXFor(6);
 
+            float slowPercentage = 0.2f;
+            GetComponent<Entity>().SlowEntityBy(slowPercentage, elementTimer);
+
             chillIcon.SetActive(true);
+            Invoke("DisableIcons", elementTimer);
         }
-        if (_shock)
+        if (_shock && canApplyShock)
         {
-            isShocked = _shock;
-            elementTimer = 5;
+            if (!isShocked)
+            {
+                ApplyShock(_shock);
+            }
+            else
+            {
+                if (GetComponent<Player>() != null) { return; }
 
-            fx.ShockFXFor(5);
+                HitNearestTargetWithShock();
+            }
+        }
 
-            shockIcon.SetActive(true);
+    }
+
+    public void ApplyShock(bool _shock)
+    {
+        if (isShocked) { return; }
+
+        isShocked = _shock;
+        elementTimer = 5;
+
+        fx.ShockFXFor(5);
+
+        shockIcon.SetActive(true);
+        Invoke("DisableIcons", elementTimer);
+    }
+
+    private void HitNearestTargetWithShock()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 25);
+
+        float closestDistance = Mathf.Infinity;
+        Transform closestEnemy = null;
+
+        foreach (var hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>() != null && Vector2.Distance(transform.position, hit.transform.position) > 1)
+            {
+                float distanceToEnemy = Vector2.Distance(transform.position, hit.transform.position);
+
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    closestEnemy = hit.transform;
+                }
+            }
+
+            if (closestEnemy != null)
+            {
+                closestEnemy = transform;
+            }
+        }
+
+
+
+        if (closestEnemy != null)
+        {
+            GameObject newShockStrike = Instantiate(shockStrikePrefab, transform.position, Quaternion.identity);
+
+            newShockStrike.GetComponent<ShockStrike_Controller>().Setup(shockDamage, closestEnemy.GetComponent<CharacterStats>());
         }
     }
 
@@ -247,10 +321,4 @@ public class CharacterStats : MonoBehaviour
     }
     public float GetMaxHealthValue() => maxHealth.GetValue() + vitality.GetValue() * 5;
 
-    private void DisableIcons()
-    {
-        igniteIcon.SetActive(false);
-        chillIcon.SetActive(false);
-        shockIcon.SetActive(false);
-    }
 }

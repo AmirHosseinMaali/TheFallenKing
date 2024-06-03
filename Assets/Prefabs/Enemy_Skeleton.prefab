@@ -271,14 +271,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: 186f6ee3fd96e1443b40fd6a6a47fa0b, type: 2}
-  chillColor:
-  - {r: 0, g: 0.7620902, b: 1, a: 1}
-  - {r: 0, g: 0.6156902, b: 0.754717, a: 1}
   igniteColor:
   - {r: 1, g: 0.4445342, b: 0, a: 1}
   - {r: 0.7647059, g: 0.28829256, b: 0, a: 1}
+  chillColor:
+  - {r: 0, g: 0.7620902, b: 1, a: 1}
+  - {r: 0, g: 0.7607844, b: 1, a: 1}
   shockColor:
-  - {r: 1, g: 0.9856311, b: 0, a: 1}
+  - {r: 0, g: 0.57645035, b: 1, a: 1}
   - {r: 0, g: 0.043653965, b: 1, a: 1}
 --- !u!50 &7728870970730512829
 Rigidbody2D:
@@ -391,7 +391,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   iceDamage:
-    baseValue: 0
+    baseValue: 5
     modifiers: []
   lightningDamage:
     baseValue: 0
@@ -402,6 +402,7 @@ MonoBehaviour:
   isIgnited: 0
   isChilled: 0
   isShocked: 0
+  shockStrikePrefab: {fileID: 743748358809189990, guid: 07c9ac245700075499524fd129f75f1a, type: 3}
   currentHealth: 0
 --- !u!1 &5525420206252385355
 GameObject:
