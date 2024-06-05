@@ -9,7 +9,7 @@ public class Skill : MonoBehaviour
 
     protected virtual void Start()
     {
-        player = PlayerManager.instance.player; 
+        player = PlayerManager.instance.player;
     }
 
     protected virtual void Update()
@@ -18,7 +18,7 @@ public class Skill : MonoBehaviour
     }
     public virtual bool CanUseSkill()
     {
-        if(cooldownTimer <= 0)
+        if (cooldownTimer <= 0)
         {
             UseSkill();
             cooldownTimer = cooldown;
@@ -42,7 +42,7 @@ public class Skill : MonoBehaviour
 
         foreach (var hit in colliders)
         {
-            if (hit.GetComponent<Enemy>() != null)
+            if (hit.GetComponent<Enemy>() != null && Vector2.Distance(transform.position, hit.transform.position) > 1)
             {
                 float distanceToEnemy = Vector2.Distance(_checkTransform.position, hit.transform.position);
 

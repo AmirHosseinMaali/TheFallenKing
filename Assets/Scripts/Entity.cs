@@ -21,7 +21,7 @@ public class Entity : MonoBehaviour
     #region Components
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
-    public EntityFX fX { get; private set; }
+    public EntityFX fx { get; private set; }
     public SpriteRenderer sr { get; private set; }
     public CharacterStats stats { get; private set; }
     public CapsuleCollider2D cd { get; private set; }
@@ -40,7 +40,7 @@ public class Entity : MonoBehaviour
     {
         sr = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
-        fX = GetComponent<EntityFX>();
+        fx = GetComponent<EntityFX>();
         rb = GetComponent<Rigidbody2D>();
         stats = GetComponent<CharacterStats>();
         cd = GetComponent<CapsuleCollider2D>();
@@ -58,13 +58,7 @@ public class Entity : MonoBehaviour
         anim.speed = 1;
     }
 
-    public virtual void DamageEffect()
-    {
-        fX.StartCoroutine("FlashFX");
-
-        StartCoroutine(HitKnockback());
-        Debug.Log(gameObject.name + " is damaged!");
-    }
+    public virtual void DamageImpact() => StartCoroutine(HitKnockback());
 
     protected virtual IEnumerator HitKnockback()
     {
@@ -124,17 +118,6 @@ public class Entity : MonoBehaviour
     }
     #endregion
 
-    public void MakeTransparent(bool _transparent)
-    {
-        if (_transparent)
-        {
-            sr.color = Color.clear;
-        }
-        else
-        {
-            sr.color = Color.white;
-        }
-    }
 
     public virtual void Die()
     {

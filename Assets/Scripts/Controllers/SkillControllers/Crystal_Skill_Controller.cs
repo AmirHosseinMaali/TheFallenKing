@@ -49,6 +49,8 @@ public class Crystal_Skill_Controller : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, closestTarget.position, moveSpeed * Time.deltaTime);
 
+            if(closestTarget==null) { return; }
+
             if (Vector2.Distance(transform.position, closestTarget.position) < 1)
             {
                 FinishCrystal();
@@ -69,7 +71,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().DamageEffect();
+                PlayerManager.instance.player.stats.DoMagicalDamage(hit.GetComponent<CharacterStats>());
             }
         }
     }

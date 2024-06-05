@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Sword_Skill_Controller : MonoBehaviour
@@ -130,7 +131,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void SwordSkillDamage(Enemy enemy)
     {
-        enemy.DamageEffect();
+        PlayerManager.instance.player.stats.DoDamage(enemy.GetComponent<CharacterStats>()); 
         enemy.StartCoroutine("FreezeTimeFor", freezeTimeDuration);
     }
 
@@ -232,7 +233,7 @@ public class Sword_Skill_Controller : MonoBehaviour
                     {
                         if (hit.GetComponent<Enemy>() != null)
                         {
-                            hit.GetComponent<Enemy>().DamageEffect();
+                            PlayerManager.instance.player.stats.DoDamage(hit.GetComponent<CharacterStats>());
                         }
                     }
                 }

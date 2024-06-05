@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
-  swordType: 0
+  swordType: 2
   pierceAmount: 2
   pierceGravity: 0.2
   bounceAmount: 4
@@ -7418,7 +7418,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: []
   fireDamage:
-    baseValue: 0
+    baseValue: 50
     modifiers: []
   iceDamage:
     baseValue: 0
@@ -8087,103 +8087,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2077416549
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 22.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3726650652105791077, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099929610147495035, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099929610147495035, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5327873981727244909, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: m_Name
-      value: Enemy_Skeleton (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795169395665077786, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: shockStrikePrefab
-      value: 
-      objectReference: {fileID: 743748358809189990, guid: 07c9ac245700075499524fd129f75f1a, type: 3}
-    - target: {fileID: 7795169395665077786, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: iceDamage.baseValue
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8151035166359771628, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: chillColor.Array.data[1].b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8151035166359771628, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: chillColor.Array.data[1].g
-      value: 0.7607844
-      objectReference: {fileID: 0}
-    - target: {fileID: 8151035166359771628, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: shockColor.Array.data[0].b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8151035166359771628, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: shockColor.Array.data[0].g
-      value: 0.57645035
-      objectReference: {fileID: 0}
-    - target: {fileID: 8151035166359771628, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
-      propertyPath: shockColor.Array.data[0].r
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
 --- !u!1001 &2142697430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8192,6 +8095,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1285010021}
     m_Modifications:
+    - target: {fileID: 2756709918616042201, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774317575912352471, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_Name
+      value: HealthUI
+      objectReference: {fileID: 0}
     - target: {fileID: 5194543742758376060, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
       propertyPath: m_Name
       value: Entity_Status_UI
@@ -8356,6 +8267,14 @@ PrefabInstance:
     - target: {fileID: 5327873981727244909, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
       propertyPath: m_Name
       value: Enemy_Skeleton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911280267719809672, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
+      propertyPath: m_Name
+      value: HealthUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217284843625007750, guid: 9296a3c4e5c8c6149a85be288bde19fe, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
