@@ -172,7 +172,7 @@ public class Blackhole_Skill_Controller : MonoBehaviour
         }
         if (!canCreateHotkeys) { return; }
 
-        GameObject newHotKey = Instantiate(hotKeyPrefab, collision.transform.position + new Vector3(0, 2), Quaternion.identity);
+        GameObject newHotKey = Instantiate(hotKeyPrefab, collision.transform.position + new Vector3(0, 2.5f), Quaternion.identity);
         createdHotkey.Add(newHotKey);
 
         KeyCode chosenKey = keyCodeList[Random.Range(0, keyCodeList.Count)];

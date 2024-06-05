@@ -72,9 +72,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: -1141301655
+  m_SortingLayer: 4
+  m_SortingOrder: 0
   m_Sprite: {fileID: -85727878, guid: 687df074731fbf744b668d2275dbb675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -475,7 +475,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1141301655
-  m_SortingLayer: 1
+  m_SortingLayer: 4
   m_SortingOrder: -10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0.39215687}
@@ -527,9 +527,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3726650652105791077}
     m_Modifications:
+    - target: {fileID: 2756709918616042201, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774317575912352471, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_Name
+      value: HealthUI
+      objectReference: {fileID: 0}
     - target: {fileID: 5194543742758376060, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
       propertyPath: m_Name
       value: Entity_Status_UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528452621345115597, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528452621345115597, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1141301655
       objectReference: {fileID: 0}
     - target: {fileID: 6908614989158921914, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
       propertyPath: m_Pivot.x
