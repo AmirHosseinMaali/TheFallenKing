@@ -6,6 +6,7 @@ public class PlayerPrimaryAttackState : PlayerState
 
     private float lastTimeAttack;
     private float comboWindow = 2;
+
     public PlayerPrimaryAttackState(PlayerStateMachine _stateMachine, Player _player, string _animBoolName) : base(_stateMachine, _player, _animBoolName)
     {
     }
