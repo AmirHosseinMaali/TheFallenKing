@@ -67,23 +67,26 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            AddToInventory(oldEquipment);
+            AddItem(oldEquipment);
         }
 
         equipment.Add(newItem);
         equipmentDict.Add(newEquipment, newItem);
+
+        newEquipment.AddModifiers();
         RemoveItem(_item);
 
         UpdateSlotUI();
 
     }
 
-    private void UnequipItem(EquipmentData itemToRemove)
+    public void UnequipItem(EquipmentData itemToRemove)
     {
         if (equipmentDict.TryGetValue(itemToRemove, out InventoryItem value))
         {
             equipment.Remove(value);
             equipmentDict.Remove(itemToRemove);
+            itemToRemove.RemoveModifiers();
         }
     }
 
@@ -177,11 +180,12 @@ public class Inventory : MonoBehaviour
                 value.RemoveStack();
             }
         }
+
         if (stashDict.TryGetValue(_item, out InventoryItem stashValue))
         {
-            if (value.stackSize <= 1)
+            if (stashValue.stackSize <= 1)
             {
-                stash.Remove(value);
+                stash.Remove(stashValue);
                 stashDict.Remove(_item);
             }
 
@@ -191,5 +195,41 @@ public class Inventory : MonoBehaviour
             }
         }
         UpdateSlotUI();
+    }
+
+    public bool canCraft(EquipmentData _itemToCraft, List<InventoryItem> _requiredMaterials)
+    {
+
+        List<InventoryItem> materialsToRemove = new List<InventoryItem>();
+
+        for (int i = 0; i < _requiredMaterials.Count; i++)
+        {
+            if (stashDict.TryGetValue(_requiredMaterials[i].data, out InventoryItem stashValue))
+            {
+                if (stashValue.stackSize < _requiredMaterials[i].stackSize)
+                {
+                    Debug.Log("Not enough material");
+                    return false;
+                }
+                else
+                {
+                    materialsToRemove.Add(stashValue);
+                }
+            }
+            else
+            {
+                Debug.Log("Not enough material");
+                return false;
+            }
+
+        }
+        for (int i = 0; i < materialsToRemove.Count; i++)
+        {
+            RemoveItem(materialsToRemove[i].data);
+        }
+
+        AddItem(_itemToCraft);
+        Debug.Log(_itemToCraft.itemName + " crafted.");
+        return true;
     }
 }

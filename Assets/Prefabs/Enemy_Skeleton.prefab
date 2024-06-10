@@ -404,6 +404,8 @@ MonoBehaviour:
   isShocked: 0
   shockStrikePrefab: {fileID: 743748358809189990, guid: 07c9ac245700075499524fd129f75f1a, type: 3}
   currentHealth: 0
+  level: 0
+  percentageModifier: 0
 --- !u!1 &5525420206252385355
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +529,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3726650652105791077}
     m_Modifications:
+    - target: {fileID: 1828641891357471672, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828641891357471672, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828641891357471672, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1141301655
+      objectReference: {fileID: 0}
+    - target: {fileID: 1852132044460215971, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1852132044460215971, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1852132044460215971, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1141301655
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749968738369640763, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749968738369640763, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749968738369640763, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1141301655
+      objectReference: {fileID: 0}
     - target: {fileID: 2756709918616042201, guid: cea3f4a654381a9458906bb5188947ba, type: 3}
       propertyPath: m_Value
       value: 1

@@ -16,3 +16,22 @@ MonoBehaviour:
   itemName: SteelSword
   icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   equipmentType: 0
+  strength: 0
+  agility: 5
+  intelligence: 0
+  vitality: 0
+  damage: 0
+  critChance: 30
+  critPower: 0
+  health: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDamage: 10
+  iceDamage: 0
+  lightningDamage: 0
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: eb0e892bcc9a40b4f9c503b1531d2fca, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: 29a0be7b5cc7a1f44a68f0c68ebc8bcf, type: 2}
+    stackSize: 1
